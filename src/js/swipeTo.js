@@ -2,6 +2,7 @@
 	var vendor = getVendorPrefix().css;
 
 	function animateTo(that, pos) {
+		that = $(that);
 		if(getIe()) {
 			that.css({
 				'left': pos+'px'
@@ -152,6 +153,10 @@
 
 			});
 		}
+
+		return  {
+			animateTo: animateTo
+		};
 	};
 }(Zepto));
 

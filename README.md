@@ -2,7 +2,7 @@
 swipeTo is a jQuery plugin that emulate the native swipe to action feature upon a list on mobile phones
 # Usage
 ### DOM
-```HTML
+```html
 <div class="list">
     <div class="item">
         <a href="#" class="item-swipe">Item</a>

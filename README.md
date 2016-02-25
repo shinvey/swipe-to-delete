@@ -54,6 +54,8 @@ If you want to use default options simply place this code in your javascript fil
     $(function() {
         $('.item-swipe').swipeTo();
     })
+# Demo
+![Demo page](src/images/demo.png "Demo page")
 # Change Log
 该项目clone自[swipeTo](https://github.com/Ipno84/swipeTo)，做了如下改动
 * [UPD] 兼容Zepto

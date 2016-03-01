@@ -48,6 +48,9 @@ This option allows you to set the property "overflow: hidden" on an item during 
 #### binder
 You can set this option as true or false to close ad open element swiped with a tap
 
+#### oneOpen
+This option means you can open element swiped only one every time. The default value is `false`.
+
 #### swipeStart, swipeMove, swipeEnd
 These are the callbacks that will be initialized, respectively, at the beginning, during ad at the end of the swipe effect
 

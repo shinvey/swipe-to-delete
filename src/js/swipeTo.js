@@ -65,7 +65,8 @@
 			minSwipe: 100,
 			angle: 10,
 			wrapScroll: 'body',
-			binder: true,
+			binder: true,//支持点击关闭
+			oneOpen: false,//只打开一个实例
 			swipeStart: function() {},
 			swipeMove: function() {},
 			swipeEnd: function() {}
@@ -77,13 +78,16 @@
 		var minSwipe = settings.minSwipe;
 		var moveStatus;
 		var wrapScroll = $(settings.wrapScroll);
-		var handler = this.selector;
+		var handler = ".swipeto-item";//筛选selector
 		var binder = settings.binder;
 		var swipeStart = settings.swipeStart;
 		var swipeMove = settings.swipeMove;
 		var swipeEnd = settings.swipeEnd;
+		var items = $(this);
+		var $body = $(document.body);
 
-		$(document.body).on('touchstart', handler, function(ev) {
+		items.addClass($.trim(handler.replace(".", " ")));
+		$body.on('touchstart', handler, function(ev) {
 			var that = $(this);
 			var e = ev.originalEvent;
 			start = e.touches[0].clientX;
@@ -92,9 +96,15 @@
 			if(typeof swipeStart == 'function') {
 				swipeStart.call(this);
 			}
+			if ( settings.oneOpen ) {
+				var $opendItem = items.filter(".open").not(this);
+				if ($opendItem.size() > 0) {
+					$opendItem.trigger("click");
+				}
+			}
 		});
 
-		$(document.body).on('touchmove', handler, function(ev) {
+		$body.on('touchmove', handler, function(ev) {
 			var that = $(this);
 			var e = ev.originalEvent;
 
@@ -119,7 +129,7 @@
 			}
 		});
 
-		$(document.body).on('touchend', handler, function() {
+		$body.on('touchend', handler, function() {
 			var that = $(this);
 			wrapScroll.removeClass('overflow-hidden');
 			that.removeClass('swiping');
@@ -141,16 +151,16 @@
 		});
 
 		if(binder) {
-			$(document.body).on('click tap', handler, function(ev) {
-				if(moveStatus != 0) {
-					var that = $(this);
+			$body.on('click tap', handler, function(ev) {
+				var _that = $(this),
+					_moveStatus = getPosition(_that);
+				if(_moveStatus != 0) {
 					var e = ev.originalEvent;
 					e.preventDefault();
-					that.addClass('swiped');
-					animateTo(that, 0);
-					that.removeClass('open');
+					_that.addClass('swiped');
+					animateTo(_that, 0);
+					_that.removeClass('open');
 				}
-
 			});
 		}
 
@@ -159,4 +169,3 @@
 		};
 	};
 }(Zepto));
-

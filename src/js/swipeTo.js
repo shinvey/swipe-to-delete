@@ -78,7 +78,7 @@
 		var minSwipe = settings.minSwipe;
 		var moveStatus;
 		var wrapScroll = $(settings.wrapScroll);
-		var handler = ".swipeto-item";//筛选selector
+		var handler = ".swipeto-item.min-swipe_"+ minSwipe;//筛选selector
 		var binder = settings.binder;
 		var swipeStart = settings.swipeStart;
 		var swipeMove = settings.swipeMove;
@@ -86,7 +86,7 @@
 		var items = $(this);
 		var $body = $(document.body);
 
-		items.addClass($.trim(handler.replace(".", " ")));
+		items.addClass($.trim(handler.replace(/\./g, " ")));
 		$body.on('touchstart', handler, function(ev) {
 			var that = $(this);
 			var e = ev.originalEvent;
@@ -97,7 +97,7 @@
 				swipeStart.call(this);
 			}
 			if ( settings.oneOpen ) {
-				var $opendItem = items.filter(".open").not(this);
+				var $opendItem = wrapScroll.find(".swipeto-item").filter(".open").not(this);
 				if ($opendItem.size() > 0) {
 					$opendItem.trigger("click");
 				}
